@@ -48,6 +48,7 @@ const objects = [
   {
     id: 1,
     path: import.meta.env.BASE_URL + "/3d/kecapi.glb",
+    thumb: import.meta.env.BASE_URL + "/img/designs/kecapi.jpg",
     position: [0, 0, 10],
     light: [1, 1, 1],
     scale: 3,
@@ -58,6 +59,7 @@ const objects = [
   {
     id: 2,
     path: import.meta.env.BASE_URL + "/3d/kipas_angin.glb",
+    thumb: import.meta.env.BASE_URL + "/img/designs/kipas.jpg",
     position: [0, 0, 10],
     light: [1, 1, 1],
     scale: 5,
@@ -68,6 +70,7 @@ const objects = [
   {
     id: 3,
     path: import.meta.env.BASE_URL + "/3d/taiganja.glb",
+    thumb: import.meta.env.BASE_URL + "/img/designs/tg.jpg",
     position: [0, 0, 10],
     light: [1, 1, 1],
     scale: 10,
@@ -78,6 +81,7 @@ const objects = [
   {
     id: 4,
     path: import.meta.env.BASE_URL + "/3d/robot.glb",
+    thumb: import.meta.env.BASE_URL + "/img/designs/robot.jpg",
     position: [0, 10, 25],
     light: [1, 1, 1],
     scale: 1,
@@ -88,6 +92,7 @@ const objects = [
   {
     id: 5,
     path: import.meta.env.BASE_URL + "/3d/orang.glb",
+    thumb: import.meta.env.BASE_URL + "/img/designs/orang.jpg",
     position: [0, 10, 25],
     light: [1, 1, 1],
     scale: 1,
@@ -98,6 +103,7 @@ const objects = [
   {
     id: 6,
     path: import.meta.env.BASE_URL + "/3d/kevin.glb",
+    thumb: import.meta.env.BASE_URL + "/img/designs/kev.jpg",
     position: [0, 5, 10],
     light: [1, 2, 1],
     scale: 5,
@@ -107,6 +113,7 @@ const objects = [
   {
     id: 7,
     path: import.meta.env.BASE_URL + "/3d/BLUE FISH.glb",
+    thumb: import.meta.env.BASE_URL + "/img/designs/fish.jpg",
     position: [0, 0, 10],
     light: [1, 1, 1],
     scale: 5,
@@ -128,6 +135,7 @@ export default function DesignProjects() {
   const [selectedProject, setSelectedProject] = useState(null); // <- modal data
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [is3d, setIs3d] = useState(false);
+  const [activeObject, setActiveObject] = useState(objects[0]);
 
   const GLBPreview = ({ path, position, light, scale, orbit }) => {
     const { scene } = useGLTF(path);
@@ -274,8 +282,7 @@ export default function DesignProjects() {
       </div>
       {isModalOpen && selectedProject && is3d && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          {/* Modal wrapper */}
-          <div className="bg-white rounded-2xl w-full max-w-2xl relative flex flex-col max-h-[90vh] shadow-lg overflow-hidden">
+          <div className="bg-white rounded-2xl w-full max-w-3xl relative flex flex-col max-h-[95vh] shadow-lg overflow-hidden">
             {/* Tombol close */}
             <button
               className="absolute top-4 right-4 text-black text-lg z-10"
@@ -284,33 +291,55 @@ export default function DesignProjects() {
               ✕
             </button>
 
-            {/* Scrollable content */}
             <div className="overflow-y-auto pt-16 px-6 pb-6 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
               <h2 className="text-2xl font-bold mb-4 text-black">
                 3D Modelling
               </h2>
 
-              {/* 3D Canvas */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {objects.map((obj) => (
-                  <div key={obj.id}>
-                    <div className="w-full h-64 bg-gray-100 rounded-xl overflow-hidden shadow-md">
-                      <Suspense fallback={<Loader />}>
-                        <GLBPreview
-                          path={obj.path}
-                          position={obj.position}
-                          light={obj.light}
-                          scale={obj.scale}
-                          orbit={obj.orbit}
-                        />
-                      </Suspense>
-                    </div>
-                    <p className="text-gray-500 text-xs mt-2">
-                      {obj.description}
-                    </p>
-                  </div>
+              {/* Thumbnail Selector */}
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 mb-6">
+                {objects.map((obj, idx) => (
+                  <img
+                    key={obj.id}
+                    src={obj.thumb}
+                    onClick={() => setActiveObject(obj)}
+                    className={`cursor-pointer rounded-xl border-2 ${
+                      activeObject?.id === obj.id
+                        ? "border-blue-500"
+                        : "border-transparent"
+                    } hover:border-blue-300 transition`}
+                    alt={"3D Thumbnail " + idx}
+                  />
                 ))}
               </div>
+
+              {/* 3D Preview */}
+              {activeObject && (
+                <div className="w-full h-72 sm:h-96 bg-gray-100 rounded-xl overflow-hidden shadow-md mb-4">
+                  <Suspense fallback={<Loader />}>
+                    <Canvas
+                      camera={{ position: activeObject.position, fov: 30 }}
+                    >
+                      <ambientLight />
+                      <Environment preset="warehouse" background={false} />
+                      <primitive
+                        object={useGLTF(activeObject.path).scene}
+                        scale={activeObject.scale}
+                        position={[0, 0, 0]}
+                      />
+                      <OrbitControls
+                        enableZoom={true}
+                        target={activeObject.orbit}
+                        autoRotate={true}
+                      />
+                    </Canvas>
+                  </Suspense>
+                </div>
+              )}
+
+              <p className="text-gray-600 text-sm mb-4">
+                {activeObject?.description}
+              </p>
               <h2 className="text-2xl font-bold mb-4 text-black mt-5 ">
                 Some render result from Blender
               </h2>
@@ -330,6 +359,7 @@ export default function DesignProjects() {
           </div>
         </div>
       )}
+
       {isModalOpen && selectedProject && !is3d && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
           {/* Modal wrapper */}
