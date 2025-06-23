@@ -25,7 +25,7 @@ const TextOverlay = () => {
         color="#2786df"
         anchorX="center"
         anchorY="top"
-        font={font}
+        font={import.meta.env.BASE_URL + font}
         fontWeight={0.5}
         outlineWidth={0.02}
         outlineColor="#2786df"
@@ -39,7 +39,7 @@ const TextOverlay = () => {
         color="#2786df"
         anchorX="center"
         anchorY="top"
-        font={font}
+        font={import.meta.env.BASE_URL + font}
         fontWeight={0.8}
       >
         Software Developer, Graphic Designer
@@ -51,7 +51,7 @@ const TextOverlay = () => {
         color="#2786df"
         anchorX="center"
         anchorY="top"
-        font={font}
+        font={import.meta.env.BASE_URL + font}
         fontWeight={0.8}
       >
         click the tab
