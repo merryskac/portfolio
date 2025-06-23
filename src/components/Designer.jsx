@@ -19,9 +19,9 @@ const Designer = () => {
               I'm a self-taught Graphic designer with experience in branding,
               social-media posts, and product design
               <span className="font-bold"> branding</span>,
-              <span className="font-bold"> social-media posts</span>
+              <span className="font-bold"> social-media posts,</span>
               <span className="font-bold"> product design</span> and
-              <span className="font-bold"> 3d Modelling</span> and
+              <span className="font-bold"> 3d Modelling</span>
             </p>
             <div>
               <h2 className="font-bold text-xl mt-8">

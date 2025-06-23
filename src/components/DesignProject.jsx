@@ -301,12 +301,13 @@ export default function DesignProjects() {
                   />
                 ))}
               </div>
-
+              <p className="text-gray-500 text-xs">Spin the object around</p>
               {/* 3D Preview */}
               {activeObject && (
                 <div className="w-full h-72 sm:h-96 bg-gray-100 rounded-xl overflow-hidden shadow-md mb-4">
                   <Canvas
                     dpr={1}
+                    frameloop="demand"
                     camera={{ position: activeObject.position, fov: 30 }}
                   >
                     <ambientLight />
@@ -317,7 +318,7 @@ export default function DesignProjects() {
                     <OrbitControls
                       enableZoom={true}
                       target={activeObject.orbit}
-                      autoRotate={true}
+                      // autoRotate={true}
                     />
                   </Canvas>
                 </div>
