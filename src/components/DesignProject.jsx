@@ -129,6 +129,11 @@ const Loader = () => (
   </div>
 );
 
+function ModelViewer({ object }) {
+  const { scene } = useGLTF(object.path);
+  return <primitive object={scene} scale={object.scale} position={[0, 0, 0]} />;
+}
+
 export default function DesignProjects() {
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
@@ -136,22 +141,6 @@ export default function DesignProjects() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [is3d, setIs3d] = useState(false);
   const [activeObject, setActiveObject] = useState(objects[0]);
-
-  const GLBPreview = ({ path, position, light, scale, orbit }) => {
-    const { scene } = useGLTF(path);
-
-    // useEffect(() => {}, [scene]);
-
-    return (
-      <Canvas camera={{ position: position, fov: 30 }}>
-        {/* <pointLight intensity={5} position={light} size={15} /> */}
-        <ambientLight />
-        <Environment preset="warehouse" background={false} />
-        <primitive object={scene} scale={scale} position={[0, 0, 0]} />
-        <OrbitControls enableZoom={true} target={orbit} autoRotate={true} />
-      </Canvas>
-    );
-  };
 
   useLayoutEffect(() => {
     if (!cardsRef.current || !containerRef.current) return;
@@ -316,24 +305,21 @@ export default function DesignProjects() {
               {/* 3D Preview */}
               {activeObject && (
                 <div className="w-full h-72 sm:h-96 bg-gray-100 rounded-xl overflow-hidden shadow-md mb-4">
-                  <Suspense fallback={<Loader />}>
-                    <Canvas
-                      camera={{ position: activeObject.position, fov: 30 }}
-                    >
-                      <ambientLight />
-                      <Environment preset="warehouse" background={false} />
-                      <primitive
-                        object={useGLTF(activeObject.path).scene}
-                        scale={activeObject.scale}
-                        position={[0, 0, 0]}
-                      />
-                      <OrbitControls
-                        enableZoom={true}
-                        target={activeObject.orbit}
-                        autoRotate={true}
-                      />
-                    </Canvas>
-                  </Suspense>
+                  <Canvas
+                    dpr={1}
+                    camera={{ position: activeObject.position, fov: 30 }}
+                  >
+                    <ambientLight />
+                    <Environment preset="warehouse" background={false} />
+                    <Suspense fallback={<Loader />}>
+                      <ModelViewer object={activeObject} />
+                    </Suspense>
+                    <OrbitControls
+                      enableZoom={true}
+                      target={activeObject.orbit}
+                      autoRotate={true}
+                    />
+                  </Canvas>
                 </div>
               )}
 
