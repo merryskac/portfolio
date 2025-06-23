@@ -1,7 +1,6 @@
 import { Text } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
-import font from "/font/LexendDeca-VariableFont_wght.ttf";
 
 const TextOverlay = () => {
   const textRef = useRef();
