@@ -4,7 +4,6 @@ import Tablet from "../models/Tablet";
 import TextOverlay from "../models/Text";
 
 const Experience = ({ ...props }) => {
-  console.log(props);
   return (
     <>
       {/* <OrbitControls/> */}
