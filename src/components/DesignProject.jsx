@@ -14,40 +14,40 @@ const projects = [
   {
     title: "Fanmo",
     description: "Social media posts",
-    image: "/img/fanmo.png",
-    project_images: "/img/designs/1.jpg",
+    image: import.meta.env.BASE_URL + "/img/fanmo.png",
+    project_images: import.meta.env.BASE_URL + "/img/designs/1.jpg",
   },
   {
     title: "Graciella Music School Concert 2024",
     description: "Social media posts, backdrop, proposal, certificates",
-    image: "/img/concert24.png",
-    project_images: "/img/designs/2.jpg",
+    image: import.meta.env.BASE_URL + "/img/concert24.png",
+    project_images: import.meta.env.BASE_URL + "/img/designs/2.jpg",
   },
   {
     title: "Graciella Music School Concert 2022",
     description:
       "Social media posts, backdrop, proposal, certificates, utilities",
-    image: "/img/concert2022.png",
-    project_images: "/img/designs/3.jpg",
+    image: import.meta.env.BASE_URL + "/img/concert2022.png",
+    project_images: import.meta.env.BASE_URL + "/img/designs/3.jpg",
   },
   {
     title: "Graciella Music School Palu",
     description: "Brand design",
-    image: "/img/graciella-music.png",
-    project_images: "/img/designs/4.jpg",
+    image: import.meta.env.BASE_URL + "/img/graciella-music.png",
+    project_images: import.meta.env.BASE_URL + "/img/designs/4.jpg",
   },
   {
     title: "Others",
     description: "Other graphic design projects",
-    image: "/img/designs/other.jpg",
-    project_images: "/img/designs/5.jpg",
+    image: import.meta.env.BASE_URL + "/img/designs/other.jpg",
+    project_images: import.meta.env.BASE_URL + "/img/designs/5.jpg",
   },
 ];
 
 const objects = [
   {
     id: 1,
-    path: "/3d/kecapi.glb",
+    path: import.meta.env.BASE_URL + "/3d/kecapi.glb",
     position: [0, 0, 10],
     light: [1, 1, 1],
     scale: 3,
@@ -57,7 +57,7 @@ const objects = [
   },
   {
     id: 2,
-    path: "/3d/kipas_angin.glb",
+    path: import.meta.env.BASE_URL + "/3d/kipas_angin.glb",
     position: [0, 0, 10],
     light: [1, 1, 1],
     scale: 5,
@@ -67,7 +67,7 @@ const objects = [
   },
   {
     id: 3,
-    path: "/3d/taiganja.glb",
+    path: import.meta.env.BASE_URL + "/3d/taiganja.glb",
     position: [0, 0, 10],
     light: [1, 1, 1],
     scale: 10,
@@ -77,7 +77,7 @@ const objects = [
   },
   {
     id: 4,
-    path: "/3d/robot.glb",
+    path: import.meta.env.BASE_URL + "/3d/robot.glb",
     position: [0, 10, 25],
     light: [1, 1, 1],
     scale: 1,
@@ -87,7 +87,7 @@ const objects = [
   },
   {
     id: 5,
-    path: "/3d/orang.glb",
+    path: import.meta.env.BASE_URL + "/3d/orang.glb",
     position: [0, 10, 25],
     light: [1, 1, 1],
     scale: 1,
@@ -97,7 +97,7 @@ const objects = [
   },
   {
     id: 6,
-    path: "/3d/kevin.glb",
+    path: import.meta.env.BASE_URL + "/3d/kevin.glb",
     position: [0, 5, 10],
     light: [1, 2, 1],
     scale: 5,
@@ -106,7 +106,7 @@ const objects = [
   },
   {
     id: 7,
-    path: "/3d/BLUE FISH.glb",
+    path: import.meta.env.BASE_URL + "/3d/BLUE FISH.glb",
     position: [0, 0, 10],
     light: [1, 1, 1],
     scale: 5,
@@ -249,7 +249,7 @@ export default function DesignProjects() {
           }
         >
           <img
-            src={"/img/blender.png"}
+            src={import.meta.env.BASE_URL + "/img/blender.png"}
             alt={"blender"}
             className="rounded-xl mb-4 w-full object-cover h-40"
           />
@@ -315,10 +315,14 @@ export default function DesignProjects() {
                 Some render result from Blender
               </h2>
               <div>
-                <img className="" src="/img/render/render1.jpeg" alt="" />
+                <img
+                  className=""
+                  src={import.meta.env.BASE_URL + "/img/render/render1.jpeg"}
+                  alt=""
+                />
                 <img
                   className="mt-5 mb-3"
-                  src="/img/render/render2.jpeg"
+                  src={import.meta.env.BASE_URL + "/img/render/render2.jpeg"}
                   alt=""
                 />
               </div>

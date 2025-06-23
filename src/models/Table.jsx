@@ -7,30 +7,30 @@ Source: https://sketchfab.com/3d-models/table-a28843f21d784fe98cc220ef0d1df478
 Title: Table
 */
 
-import React, { useRef } from 'react';
-import { useGLTF } from '@react-three/drei';
-import table from '../assets/3d/table.glb';
-import { RigidBody } from '@react-three/rapier';
+import React, { useRef } from "react";
+import { useGLTF } from "@react-three/drei";
+import table from "/3d/table.glb";
+import { RigidBody } from "@react-three/rapier";
 
 export function Table(props) {
-	const { nodes, materials } = useGLTF(table);
-	return (
-		<group {...props} dispose={null}>
-			<group rotation={[-Math.PI / 2, 0, 0]} scale={0.007} position={[0, 2, 0]}>
-				<RigidBody >
-					<mesh
-						geometry={nodes.Object_2.geometry}
-						material={materials.New_Material}
-					/>
+  const { nodes, materials } = useGLTF(table);
+  return (
+    <group {...props} dispose={null}>
+      <group rotation={[-Math.PI / 2, 0, 0]} scale={0.007} position={[0, 2, 0]}>
+        <RigidBody>
+          <mesh
+            geometry={nodes.Object_2.geometry}
+            material={materials.New_Material}
+          />
 
-					<mesh
-						geometry={nodes.Object_3.geometry}
-						material={materials.New_Material__env_2_spec}
-					/>
-				</RigidBody>
-			</group>
-		</group>
-	);
+          <mesh
+            geometry={nodes.Object_3.geometry}
+            material={materials.New_Material__env_2_spec}
+          />
+        </RigidBody>
+      </group>
+    </group>
+  );
 }
 
 useGLTF.preload(table);

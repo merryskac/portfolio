@@ -1,6 +1,7 @@
 import { Text } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
+import font from "/font/LexendDeca-VariableFont_wght.ttf";
 
 const TextOverlay = () => {
   const textRef = useRef();
@@ -24,7 +25,7 @@ const TextOverlay = () => {
         color="#2786df"
         anchorX="center"
         anchorY="top"
-        font="/font/LexendDeca-VariableFont_wght.ttf"
+        font={font}
         fontWeight={0.5}
         outlineWidth={0.02}
         outlineColor="#2786df"
@@ -38,7 +39,7 @@ const TextOverlay = () => {
         color="#2786df"
         anchorX="center"
         anchorY="top"
-        font="/font/LexendDeca-VariableFont_wght.ttf"
+        font={font}
         fontWeight={0.8}
       >
         Software Developer, Graphic Designer
@@ -50,7 +51,7 @@ const TextOverlay = () => {
         color="#2786df"
         anchorX="center"
         anchorY="top"
-        font="/font/LexendDeca-VariableFont_wght.ttf"
+        font={font}
         fontWeight={0.8}
       >
         click the tab
