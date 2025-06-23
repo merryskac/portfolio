@@ -30,14 +30,11 @@ const Mainpage = () => {
     canvasRef.current = camera;
 
     useEffect(() => {
-      console.log("Camera Position:", camera.position);
       camera.lookAt(0, 10, 0);
     }, [camera]);
 
     return null; // Tidak perlu me-render apa pun
   };
-
-  console.log(canvasRef);
 
   const [tabScale, tabPosition, tabRotation] = adjustScreenSize();
 

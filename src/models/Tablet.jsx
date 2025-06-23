@@ -9,8 +9,6 @@ import Portfolio from "../components/Portfolio";
 import tabletScene from "/3d/Sketchfab_Scene.glb";
 
 export const Tablet = ({ ...props }) => {
-  console.log(props.canvasRef);
-
   const [isTabClick, setIsTabClick] = useState(false);
 
   const [isTabInFront, setIsTabInFront] = useState(false);
@@ -143,8 +141,6 @@ export const Tablet = ({ ...props }) => {
       setIsTabInFront(true);
     }
   };
-
-  console.log(props);
 
   return (
     <>
