@@ -334,11 +334,13 @@ export default function DesignProjects() {
                   />
                 ))}
               </div>
-              <p className="text-gray-500 text-xs">Spin the object around</p>
+              <p className="text-gray-500 text-xs">
+                Spin the object around (doesn't work on mobile)
+              </p>
               {/* 3D Preview */}
               {activeObject && (
                 <div className="w-full h-64 sm:h-96 bg-gray-100 rounded-xl overflow-hidden shadow-md mb-4">
-                  {activeObject && (
+                  {!isMobile && activeObject && (
                     <Canvas
                       key={activeObject.id} // force scene update
                       dpr={1}
@@ -358,12 +360,15 @@ export default function DesignProjects() {
                       />
                     </Canvas>
                   )}
-                  {/* {isMobile && (
-                    <img
-                      src={activeObject.thumb}
-                      className="w-full h-full object-cover"
-                    />
-                  )} */}
+                  {isMobile && (
+                    <div className="flex items-center justify-center h-full">
+                      <img
+                        src={activeObject.thumb}
+                        className="max-h-full max-w-full object-contain"
+                        alt="Thumbnail"
+                      />
+                    </div>
+                  )}
                 </div>
               )}
 
