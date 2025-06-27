@@ -5,7 +5,14 @@ import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import {
+  Suspense,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -130,20 +137,9 @@ const Loader = () => (
 );
 
 function ModelViewer({ object }) {
-  const [model, setModel] = useState(null);
+  const { scene } = useGLTF(object.path);
 
-  useEffect(() => {
-    let mounted = true;
-    useGLTF.preload(object.path); // optional
-    useGLTF(object.path).then((gltf) => {
-      if (mounted) setModel(gltf);
-    });
-    return () => { mounted = false; };
-  }, [object]);
-
-  if (!model) return null;
-
-  return <primitive object={model.scene} scale={object.scale} position={[0, 0, 0]} />;
+  return <primitive object={scene} scale={object.scale} position={[0, 0, 0]} />;
 }
 
 export default function DesignProjects() {
