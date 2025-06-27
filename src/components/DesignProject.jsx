@@ -119,7 +119,7 @@ const objects = [
   },
   {
     id: 7,
-    path: import.meta.env.BASE_URL + "/3d/BLUE FISH.glb",
+    path: import.meta.env.BASE_URL + "/3d/BLUEFISH.glb",
     thumb: import.meta.env.BASE_URL + "/img/designs/fish.jpg",
     position: [0, 0, 10],
     light: [1, 1, 1],
