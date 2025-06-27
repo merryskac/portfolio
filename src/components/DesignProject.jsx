@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 "use client";
 
-import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
+import { Environment, Html, OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -54,7 +54,7 @@ const projects = [
 const objects = [
   {
     id: 1,
-    path: import.meta.env.BASE_URL + "/3d/kecapi.glb",
+    path: import.meta.env.BASE_URL + "3d/kecapi.glb",
     thumb: import.meta.env.BASE_URL + "/img/designs/kecapi.jpg",
     position: [0, 0, 10],
     light: [1, 1, 1],
@@ -65,7 +65,7 @@ const objects = [
   },
   {
     id: 2,
-    path: import.meta.env.BASE_URL + "/3d/kipas_angin.glb",
+    path: import.meta.env.BASE_URL + "3d/kipas_angin.glb",
     thumb: import.meta.env.BASE_URL + "/img/designs/kipas.jpg",
     position: [0, 0, 10],
     light: [1, 1, 1],
@@ -76,7 +76,7 @@ const objects = [
   },
   {
     id: 3,
-    path: import.meta.env.BASE_URL + "/3d/taiganja.glb",
+    path: import.meta.env.BASE_URL + "3d/taiganja.glb",
     thumb: import.meta.env.BASE_URL + "/img/designs/tg.jpg",
     position: [0, 0, 10],
     light: [1, 1, 1],
@@ -87,7 +87,7 @@ const objects = [
   },
   {
     id: 4,
-    path: import.meta.env.BASE_URL + "/3d/robot.glb",
+    path: import.meta.env.BASE_URL + "3d/robot.glb",
     thumb: import.meta.env.BASE_URL + "/img/designs/robot.jpg",
     position: [0, 10, 25],
     light: [1, 1, 1],
@@ -98,7 +98,7 @@ const objects = [
   },
   {
     id: 5,
-    path: import.meta.env.BASE_URL + "/3d/orang.glb",
+    path: import.meta.env.BASE_URL + "3d/orang.glb",
     thumb: import.meta.env.BASE_URL + "/img/designs/orang.jpg",
     position: [0, 10, 25],
     light: [1, 1, 1],
@@ -109,7 +109,7 @@ const objects = [
   },
   {
     id: 6,
-    path: import.meta.env.BASE_URL + "/3d/kevin.glb",
+    path: import.meta.env.BASE_URL + "3d/kevin.glb",
     thumb: import.meta.env.BASE_URL + "/img/designs/kev.jpg",
     position: [0, 5, 10],
     light: [1, 2, 1],
@@ -119,7 +119,7 @@ const objects = [
   },
   {
     id: 7,
-    path: import.meta.env.BASE_URL + "/3d/BLUEFISH.glb",
+    path: import.meta.env.BASE_URL + "3d/BLUEFISH.glb",
     thumb: import.meta.env.BASE_URL + "/img/designs/fish.jpg",
     position: [0, 0, 10],
     light: [1, 1, 1],
@@ -131,15 +131,27 @@ const objects = [
 ];
 
 const Loader = () => (
-  <div className="flex items-center justify-center h-full w-full">
-    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-600"></div>
-  </div>
+  <Html center>
+    <div className="flex items-center justify-center h-full w-full">
+      <div className="animate-spin h-8 w-8 border-t-2 border-b-2 border-gray-600 rounded-full"></div>
+    </div>
+  </Html>
 );
 
 function ModelViewer({ object }) {
-  const { scene } = useGLTF(object.path);
-
-  return <primitive object={scene} scale={object.scale} position={[0, 0, 0]} />;
+  try {
+    const gltf = useGLTF(object.path);
+    return (
+      <primitive
+        object={gltf.scene}
+        scale={object.scale}
+        position={[0, 0, 0]}
+      />
+    );
+  } catch (err) {
+    console.error("Failed to load model:", object.path, err);
+    return null;
+  }
 }
 
 export default function DesignProjects() {
@@ -186,9 +198,9 @@ export default function DesignProjects() {
     ScrollTrigger.refresh();
   }, []);
 
-  useEffect(() => {
-    objects.forEach((obj) => useGLTF.preload(obj.path)); // ✅ Ini aman, jika obj.path adalah string
-  }, []);
+  // useEffect(() => {
+  //   objects.forEach((obj) => useGLTF.preload(obj.path)); // ✅ Ini aman, jika obj.path adalah string
+  // }, []);
 
   const openModal = (project) => {
     setSelectedProject(project);
@@ -312,16 +324,24 @@ export default function DesignProjects() {
               <p className="text-gray-500 text-xs">Spin the object around</p>
               {/* 3D Preview */}
               {activeObject && (
-                <div className="w-full h-72 sm:h-96 bg-gray-100 rounded-xl overflow-hidden shadow-md mb-4">
+                <div className="w-full h-64 sm:h-96 bg-gray-100 rounded-xl overflow-hidden shadow-md mb-4">
                   <Canvas
                     dpr={1}
                     frameloop="demand"
                     camera={{ position: activeObject.position, fov: 30 }}
+                    gl={{ preserveDrawingBuffer: true }}
                   >
                     <ambientLight />
                     <Environment preset="warehouse" background={false} />
-                    <Suspense fallback={<Loader />}>
-                      <ModelViewer object={activeObject} />
+                    <Suspense
+                      fallback={
+                        <div className="text-white">Loading model...</div>
+                      }
+                    >
+                      <ModelViewer
+                        key={activeObject.id}
+                        object={activeObject}
+                      />
                     </Suspense>
                     <OrbitControls
                       enableZoom={true}
