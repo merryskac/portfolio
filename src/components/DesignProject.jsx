@@ -139,19 +139,10 @@ const Loader = () => (
 );
 
 function ModelViewer({ object }) {
-  try {
-    const gltf = useGLTF(object.path);
-    return (
-      <primitive
-        object={gltf.scene}
-        scale={object.scale}
-        position={[0, 0, 0]}
-      />
-    );
-  } catch (err) {
-    console.error("Failed to load model:", object.path, err);
-    return null;
-  }
+  const gltf = useGLTF(object.path);
+  return (
+    <primitive object={gltf.scene} scale={object.scale} position={[0, 0, 0]} />
+  );
 }
 
 export default function DesignProjects() {
@@ -326,18 +317,15 @@ export default function DesignProjects() {
               {activeObject && (
                 <div className="w-full h-64 sm:h-96 bg-gray-100 rounded-xl overflow-hidden shadow-md mb-4">
                   <Canvas
+                    key={activeObject.id}
                     dpr={1}
                     frameloop="demand"
-                    camera={{ position: activeObject.position, fov: 30 }}
+                    camera={{ position: [0, 0, 10], fov: 30 }}
                     gl={{ preserveDrawingBuffer: true }}
                   >
                     <ambientLight />
                     <Environment preset="warehouse" background={false} />
-                    <Suspense
-                      fallback={
-                        <div className="text-white">Loading model...</div>
-                      }
-                    >
+                    <Suspense fallback={<Loader />}>
                       <ModelViewer
                         key={activeObject.id}
                         object={activeObject}
