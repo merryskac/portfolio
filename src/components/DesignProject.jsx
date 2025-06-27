@@ -140,6 +140,19 @@ const Loader = () => (
 
 function ModelViewer({ object }) {
   const gltf = useGLTF(object.path);
+
+  useEffect(() => {
+    return () => {
+      gltf.scene?.traverse((child) => {
+        if (child.isMesh) {
+          child.geometry.dispose();
+          if (child.material.map) child.material.map.dispose();
+          child.material.dispose();
+        }
+      });
+    };
+  }, [gltf]);
+
   return (
     <primitive object={gltf.scene} scale={object.scale} position={[0, 0, 0]} />
   );
