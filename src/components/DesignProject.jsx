@@ -54,7 +54,7 @@ const projects = [
 const objects = [
   {
     id: 1,
-    path: import.meta.env.BASE_URL + "3d/kecapi.glb",
+    path: import.meta.env.BASE_URL + "3d/kecapi-transformed.glb",
     thumb: import.meta.env.BASE_URL + "/img/designs/kecapi.jpg",
     position: [0, 0, 10],
     light: [1, 1, 1],
@@ -76,7 +76,7 @@ const objects = [
   },
   {
     id: 3,
-    path: import.meta.env.BASE_URL + "3d/taiganja.glb",
+    path: import.meta.env.BASE_URL + "3d/taiganja-transformed.glb",
     thumb: import.meta.env.BASE_URL + "/img/designs/tg.jpg",
     position: [0, 0, 10],
     light: [1, 1, 1],
@@ -119,7 +119,7 @@ const objects = [
   },
   {
     id: 7,
-    path: import.meta.env.BASE_URL + "3d/BLUEFISH.glb",
+    path: import.meta.env.BASE_URL + "3d/BLUEFISH-transformed.glb",
     thumb: import.meta.env.BASE_URL + "/img/designs/fish.jpg",
     position: [0, 0, 10],
     light: [1, 1, 1],
@@ -139,22 +139,28 @@ const Loader = () => (
 );
 
 function ModelViewer({ object }) {
-  const gltf = useGLTF(object.path);
+  const { scene } = useGLTF(object.path);
+  const ref = useRef();
 
   useEffect(() => {
     return () => {
-      gltf.scene?.traverse((child) => {
+      scene.traverse((child) => {
         if (child.isMesh) {
-          child.geometry.dispose();
-          if (child.material.map) child.material.map.dispose();
-          child.material.dispose();
+          child.geometry?.dispose();
+          if (child.material.map) child.material.map.dispose?.();
+          child.material?.dispose?.();
         }
       });
     };
-  }, [gltf]);
+  }, [scene]);
 
   return (
-    <primitive object={gltf.scene} scale={object.scale} position={[0, 0, 0]} />
+    <primitive
+      ref={ref}
+      object={scene}
+      scale={object.scale}
+      position={[0, 0, 0]}
+    />
   );
 }
 
@@ -165,6 +171,9 @@ export default function DesignProjects() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [is3d, setIs3d] = useState(false);
   const [activeObject, setActiveObject] = useState(objects[0]);
+
+  const isMobile =
+    typeof window !== "undefined" && /Mobi|Android/i.test(navigator.userAgent);
 
   useLayoutEffect(() => {
     if (!cardsRef.current || !containerRef.current) return;
@@ -329,27 +338,32 @@ export default function DesignProjects() {
               {/* 3D Preview */}
               {activeObject && (
                 <div className="w-full h-64 sm:h-96 bg-gray-100 rounded-xl overflow-hidden shadow-md mb-4">
-                  <Canvas
-                    key={activeObject.id}
-                    dpr={1}
-                    frameloop="demand"
-                    camera={{ position: [0, 0, 10], fov: 30 }}
-                    gl={{ preserveDrawingBuffer: true }}
-                  >
-                    <ambientLight />
-                    <Environment preset="warehouse" background={false} />
-                    <Suspense fallback={<Loader />}>
-                      <ModelViewer
-                        key={activeObject.id}
-                        object={activeObject}
+                  {activeObject && (
+                    <Canvas
+                      key={activeObject.id} // force scene update
+                      dpr={1}
+                      frameloop="demand"
+                      camera={{ position: activeObject.position, fov: 30 }}
+                      gl={{ preserveDrawingBuffer: true }}
+                    >
+                      <ambientLight />
+                      <Environment preset="warehouse" background={false} />
+                      <Suspense fallback={<Loader />}>
+                        <ModelViewer object={activeObject} />
+                      </Suspense>
+                      <OrbitControls
+                        enableZoom={true}
+                        target={activeObject.orbit}
+                        enableDamping
                       />
-                    </Suspense>
-                    <OrbitControls
-                      enableZoom={true}
-                      target={activeObject.orbit}
-                      // autoRotate={true}
+                    </Canvas>
+                  )}
+                  {/* {isMobile && (
+                    <img
+                      src={activeObject.thumb}
+                      className="w-full h-full object-cover"
                     />
-                  </Canvas>
+                  )} */}
                 </div>
               )}
 
