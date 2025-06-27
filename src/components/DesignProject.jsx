@@ -87,7 +87,7 @@ const objects = [
   },
   {
     id: 4,
-    path: import.meta.env.BASE_URL + "3d/robot.glb",
+    path: import.meta.env.BASE_URL + "3d/robot-transformed.glb",
     thumb: import.meta.env.BASE_URL + "/img/designs/robot.jpg",
     position: [0, 10, 25],
     light: [1, 1, 1],
@@ -98,7 +98,7 @@ const objects = [
   },
   {
     id: 5,
-    path: import.meta.env.BASE_URL + "3d/orang.glb",
+    path: import.meta.env.BASE_URL + "3d/orang-transformed.glb",
     thumb: import.meta.env.BASE_URL + "/img/designs/orang.jpg",
     position: [0, 10, 25],
     light: [1, 1, 1],
@@ -109,7 +109,7 @@ const objects = [
   },
   {
     id: 6,
-    path: import.meta.env.BASE_URL + "3d/kevin.glb",
+    path: import.meta.env.BASE_URL + "3d/kevin-transformed.glb",
     thumb: import.meta.env.BASE_URL + "/img/designs/kev.jpg",
     position: [0, 5, 10],
     light: [1, 2, 1],
