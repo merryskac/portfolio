@@ -11,7 +11,7 @@ import DevProjects from "./DevProjects";
 const Dev = () => {
   return (
     <>
-      <div className="mt-20">
+      <div className="mt-20 ">
         <h2 className="text-4xl font-bold inline-block bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text drop-shadow-[0_2px_30px_rgba(0,0,0,1)]">
           About me
         </h2>

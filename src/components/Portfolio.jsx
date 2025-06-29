@@ -6,6 +6,8 @@ import Designer from "./Designer";
 import { useEffect, useState } from "react";
 import Dev from "./Dev";
 import Footer from "./Footer";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { SendEmail } from "./SendEmail";
 
 const Portfolio = ({ show, onClose }) => {
   const styles = useSpring({
@@ -81,8 +83,44 @@ const Portfolio = ({ show, onClose }) => {
                 Passionate about solving problems through apps and compelling
                 visuals that bring ideas to life.
               </p>
+              <p
+                className={`mt-3 text-lg font-bold ${
+                  activeTab === "dev" ? "text-white/70" : "text-black"
+                }`}
+              >
+                Let's connect!
+              </p>
+              <div className="flex gap-4 items-center">
+                <a
+                  href="https://github.com/merryskac"
+                  target="_blank"
+                  className="block py-2.5 text-sm font-medium group"
+                >
+                  <FaGithub
+                    size={30}
+                    className={`transition duration-300 ${
+                      activeTab === "dev" ? "text-white" : "text-black"
+                    }  group-hover:text-purple-400`}
+                    style={{ display: "inline-block" }}
+                  />
+                </a>
+
+                <a
+                  href="https://www.linkedin.com/in/merryska-christy-mait-62426a212/"
+                  target="_blank"
+                  className="block py-2.5 text-sm font-medium group"
+                >
+                  <FaLinkedin
+                    size={33}
+                    className={`transition duration-300 ${
+                      activeTab === "dev" ? "text-white" : "text-black"
+                    } group-hover:text-blue-500`}
+                    style={{ display: "inline-block" }}
+                  />
+                </a>
+              </div>
             </div>
-            <div className=" mb-[300px] xl:mx-[300px] m-16">
+            <div className=" mb-[200px] xl:mx-[300px] m-16">
               <div className="flex flex-wrap items-center justify-center my-2">
                 <p className={activeTab === "dev" ? "" : "text-black"}>
                   See me as
@@ -143,6 +181,7 @@ const Portfolio = ({ show, onClose }) => {
               {activeTab === "dev" && <Dev />}
               {activeTab === "design" && <Designer />}
             </div>
+            <SendEmail activeTab={activeTab} />
             <Footer activeTab={activeTab} />
           </div>
         </div>

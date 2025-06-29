@@ -1,7 +1,7 @@
 const Footer = ({ ...props }) => {
   return (
     <footer
-      className={`mt-20 ${
+      className={` ${
         props.activeTab === "design" ? "bg-black" : "bg-white/10"
       }  backdrop-blur-md border-t border-white/20  py-8 px-4`}
     >

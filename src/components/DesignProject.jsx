@@ -225,6 +225,7 @@ export default function DesignProjects() {
     setIsModalOpen(false);
     setSelectedProject(null);
     setIs3d(false);
+    setImageLoaded(false);
   };
 
   const openModal3d = (project) => {
@@ -404,17 +405,16 @@ export default function DesignProjects() {
               ✕
             </button>
 
-            {!imageLoaded && (
-              <div className="flex items-center justify-center w-full h-64 mb-4 bg-gray-200 rounded-xl">
-                <div className="animate-spin h-8 w-8 border-t-2 border-b-2 border-gray-600 rounded-full"></div>
-              </div>
-            )}
-
             {/* Scrollable content */}
             <div className="overflow-y-auto pt-16 px-6 pb-6 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
               <h2 className="text-2xl font-bold mb-1 text-black">
                 {selectedProject.title}
               </h2>
+              {!imageLoaded && (
+                <div className="flex items-center justify-center w-full h-64 mb-4 bg-white rounded-xl">
+                  <div className="animate-spin h-8 w-8 border-t-2 border-b-2 border-gray-600 rounded-full"></div>
+                </div>
+              )}
               <img
                 onLoad={() => {
                   setImageLoaded(true);
