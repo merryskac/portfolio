@@ -171,6 +171,7 @@ export default function DesignProjects() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [is3d, setIs3d] = useState(false);
   const [activeObject, setActiveObject] = useState(objects[0]);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const isMobile =
     typeof window !== "undefined" && /Mobi|Android/i.test(navigator.userAgent);
@@ -252,11 +253,7 @@ export default function DesignProjects() {
             <p className="text-xs text-gray-300 mb-2">{project.tech}</p>
             <p className=" mb-4">{project.description}</p>
             <div className="">
-              <a
-                href=""
-                target="_blank"
-                className="flex items-center justify-end gap-2"
-              >
+              <a className="flex items-center justify-end gap-2">
                 <p>Details</p>
                 <FaExternalLinkAlt
                   className="text-black hover:text-blue-400 transition"
@@ -407,12 +404,21 @@ export default function DesignProjects() {
               ✕
             </button>
 
+            {!imageLoaded && (
+              <div className="flex items-center justify-center w-full h-64 mb-4 bg-gray-200 rounded-xl">
+                <div className="animate-spin h-8 w-8 border-t-2 border-b-2 border-gray-600 rounded-full"></div>
+              </div>
+            )}
+
             {/* Scrollable content */}
             <div className="overflow-y-auto pt-16 px-6 pb-6 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
               <h2 className="text-2xl font-bold mb-1 text-black">
                 {selectedProject.title}
               </h2>
               <img
+                onLoad={() => {
+                  setImageLoaded(true);
+                }}
                 src={selectedProject?.project_images || selectedProject.image}
                 alt={selectedProject.title}
                 className="rounded-xl mb-4 w-full object-cover"
