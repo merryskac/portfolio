@@ -1,6 +1,6 @@
 export const SendEmail = (props) => {
   return (
-    <div className="flex flex-col items-center justify-center text-center mb-[250px] px-6 ">
+    <div className="flex flex-col items-center justify-center text-center mb-[250px] px-6 text-black">
       <h2
         className={`text-2xl font-bold mb-4 ${
           props.activeTab === "dev" ? "text-white" : "text-black"
